@@ -1,0 +1,9 @@
+be/csrf-example-net/.vs/
+
+fe/csrf-example/node_modules/
+fe/csrf-example/.vscode/
+fe/csrf-example/.angular/
+
+fe/MaliciousCsrfApp/node_modules/
+fe/MaliciousCsrfApp/.vscode/
+fe/MaliciousCsrfApp/.angular/

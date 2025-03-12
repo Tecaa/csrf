@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\csrf-example-net.props" />
+</Project>

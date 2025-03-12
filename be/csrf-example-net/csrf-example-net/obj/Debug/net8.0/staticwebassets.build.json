@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "2rXcc7jP5GryllOEbjxJUIH9SgJ9imHMsWgoFS12dds=",
+  "Source": "csrf-example-net",
+  "BasePath": "_content/csrf-example-net",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
