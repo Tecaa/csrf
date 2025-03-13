@@ -28,7 +28,10 @@ document.addEventListener("readystatechange", function() {
     return;
   }
 
+  
   var form = document.getElementById('maliciousForm')! as HTMLFormElement;
-  form.submit();
+  if (form){
+    form.submit();
+  }
 
 });
