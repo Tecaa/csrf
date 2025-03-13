@@ -30,3 +30,4 @@ D:\SoftwareAndCats\code\csrf\be\csrf-example-net\csrf-example-net\obj\Debug\net8
 D:\SoftwareAndCats\code\csrf\be\csrf-example-net\csrf-example-net\obj\Debug\net8.0\csrf-example-net.pdb
 D:\SoftwareAndCats\code\csrf\be\csrf-example-net\csrf-example-net\obj\Debug\net8.0\csrf-example-net.genruntimeconfig.cache
 D:\SoftwareAndCats\code\csrf\be\csrf-example-net\csrf-example-net\obj\Debug\net8.0\ref\csrf-example-net.dll
+D:\SoftwareAndCats\code\csrf\be\csrf-example-net\csrf-example-net\obj\Debug\net8.0\csrf-example-net.sourcelink.json

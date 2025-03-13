@@ -1,12 +1,15 @@
 using csrf_example_net.Requests;
 using csrf_example_net.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 
 
 namespace csrf_example_net.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+
     public class TransactionController : ControllerBase
     {
         private readonly ILogger<TransactionController> _logger;
@@ -25,8 +28,8 @@ namespace csrf_example_net.Controllers
         }
 
 
-        [ValidateAntiForgeryToken]
         [ProducesResponseType<Transaction>(StatusCodes.Status200OK)]
+        [Authorize]
         [HttpPost("create")]
         public IActionResult CreateTransaction([FromForm] NewTransactionRq transaction) // CSRF. Accept FormData
         {
@@ -36,8 +39,8 @@ namespace csrf_example_net.Controllers
         }
 
         [IgnoreAntiforgeryToken]  //CSRF vulnerability
-
         [ProducesResponseType<Transaction>(StatusCodes.Status200OK)]
+        [Authorize]
         [HttpPost("createVulnerable")]
         public IActionResult CreateTransactionVulnerable([FromForm] NewTransactionRq transaction) // CSRF. Accept FormData
         {
@@ -47,9 +50,12 @@ namespace csrf_example_net.Controllers
         }
 
         [ProducesResponseType<List<Transaction>>(StatusCodes.Status200OK)]
-        [HttpGet("list")]
+        [IgnoreAntiforgeryToken]
+        [Authorize]
+        [HttpGet("list")]        
         public IActionResult ListTransactions()
         {
+            var test = this.HttpContext.User.Identity;
             return Ok(transactions);
         }
 

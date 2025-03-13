@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("csrf-example-net")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+39a9a627eed0277bbb18d367d36ae4b931a298eb")]
 [assembly: System.Reflection.AssemblyProductAttribute("csrf-example-net")]
 [assembly: System.Reflection.AssemblyTitleAttribute("csrf-example-net")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

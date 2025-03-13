@@ -7,12 +7,20 @@ bool csrfEnabled = Convert.ToBoolean(builder.Configuration.GetSection("CsrfEnabl
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor(); // Add this line to register IHttpContextAccessor
 
 builder.Services.AddDistributedMemoryCache();
+builder.Services.AddAuthentication("CookieAuthentication")
+    .AddCookie("CookieAuthentication", options =>
+    {
+        options.LoginPath = "/";
+        options.AccessDeniedPath = "/denied";
+    });
+
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -20,7 +28,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
     if (csrfEnabled)
     {
-        options.Cookie.SameSite = SameSiteMode.Strict; //CSRF protected
+        options.Cookie.SameSite = SameSiteMode.None;//Strict; //CSRF protected
     }
     else
     {
@@ -46,10 +54,26 @@ builder.Services.AddCors(options =>
 // CSRF protection
 if (csrfEnabled)
 {
-    builder.Services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
+  //  builder.Services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
+
+    builder.Services.AddAntiforgery(options =>
+    {
+        options.Cookie.Name = "XSRF-TOKEN-DOTNET";
+        options.HeaderName = "X-XSRF-TOKEN";
+    });
 }
 
+builder.Services.AddMvc(options =>
+{
+    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+});
 var app = builder.Build();
+
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseSession(); // Add this line to enable session middleware
+
+app.UseHttpsRedirection();
 
 // Use CORS
 app.UseCors("AllowSpecificOrigin");
@@ -59,35 +83,6 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
-
-app.UseSession(); // Add this line to enable session middleware
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-// CSRF protection
-if (csrfEnabled)
-{
-    /*
-    app.UseAntiforgery();
-    */
-    var antiforgery = app.Services.GetRequiredService<IAntiforgery>();
-
-    app.Use((context, next) =>
-    {
-        var requestPath = context.Request.Path.Value;
-
-        if (string.Equals(requestPath, "/api/auth/login", StringComparison.OrdinalIgnoreCase))
-        {
-            var tokenSet = antiforgery.GetAndStoreTokens(context);
-            context.Response.Cookies.Append("XSRF-TOKEN", tokenSet.RequestToken!,
-                new CookieOptions { HttpOnly = false });
-        }
-
-        return next(context);
-    });
 }
 
 app.MapControllers();
